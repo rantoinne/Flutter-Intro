@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './question.dart';
+import './answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,22 +16,26 @@ class _MyAppState extends State<MyApp> {
 
   void _onPressAnswerQuestionButton() {
     setState(() {
-      _questionIndex = 1;
+      if (_questionIndex < 2) {
+        _questionIndex += 1;
+      }
     });
-    print('Pressed 1 answer!');
-  }
-
-  void _onPressAnswerQuestionButton2() {
-    setState(() {
-      _questionIndex = 0;
-    });
-    print('Pressed 2 answer!');
   }
 
   Widget build(BuildContext context) {
-    var questions = [
-      'What\'s your favourite color?',
-      'What\'s your favourite movie?',
+    const List<Map<String, Object>> questions = const [
+      {
+        'questionTitle': 'What\'s your favourite color?',
+        'answers': ['Green', 'Red', 'Orange', 'Violet'],
+      },
+      {
+        'questionTitle': 'Who is your favourite actor',
+        'answers': ['RDJ', 'Caprio', 'C. Bale', 'T. Holland'],
+      },
+      {
+        'questionTitle': 'Who is your favourite artist',
+        'answers': ['Lil. NasX', 'Akon', 'Skrillex', 'Sickick'],
+      }
     ];
     return MaterialApp(
       home: Scaffold(
@@ -40,20 +45,11 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: [
             Question(
-              questionTitle: questions[_questionIndex],
+              questionTitle: questions[_questionIndex]['questionTitle'],
             ),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: _onPressAnswerQuestionButton,
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: _onPressAnswerQuestionButton2,
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () => print('Pressed 3 answer!'),
-            ),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) => Answer(_onPressAnswerQuestionButton, answer))
+                .toList()
           ],
         ),
       ),
