@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,14 +16,12 @@ class _MyAppState extends State<MyApp> {
 
   void _onPressAnswerQuestionButton() {
     setState(() {
-      if (_questionIndex < 2) {
-        _questionIndex += 1;
-      }
+      _questionIndex += 1;
     });
   }
 
   Widget build(BuildContext context) {
-    const List<Map<String, Object>> questions = const [
+    const List<Map<String, Object>> _questions = const [
       {
         'questionTitle': 'What\'s your favourite color?',
         'answers': ['Green', 'Red', 'Orange', 'Violet'],
@@ -42,16 +40,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Flutter Basics'),
         ),
-        body: Column(
-          children: [
-            Question(
-              questionTitle: questions[_questionIndex]['questionTitle'],
-            ),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) => Answer(_onPressAnswerQuestionButton, answer))
-                .toList()
-          ],
-        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                questions: _questions,
+                questionIndex: _questionIndex,
+                answerQuestion: _onPressAnswerQuestionButton,
+              )
+            : Result(),
       ),
     );
   }
