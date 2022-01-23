@@ -106,7 +106,10 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _questionIndex,
                 answerQuestion: _onAnswerQuestion,
               )
-            : Result(totalScore: _totalScore, resetQuiz: _resetQuiz),
+            : Result(
+                totalScore: _totalScore,
+                resetQuiz: _resetQuiz,
+              ),
       ),
     );
   }
