@@ -13,10 +13,19 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _onPressAnswerQuestionButton() {
+  void _onAnswerQuestion(int score) {
     setState(() {
       _questionIndex += 1;
+      _totalScore += score;
+    });
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
     });
   }
 
@@ -24,15 +33,66 @@ class _MyAppState extends State<MyApp> {
     const List<Map<String, Object>> _questions = const [
       {
         'questionTitle': 'What\'s your favourite color?',
-        'answers': ['Green', 'Red', 'Orange', 'Violet'],
+        'answers': [
+          {
+            'text': 'Green',
+            'score': 80,
+          },
+          {
+            'text': 'Red',
+            'score': 20,
+          },
+          {
+            'text': 'Orange',
+            'score': 50,
+          },
+          {
+            'text': 'Violet',
+            'score': 70,
+          },
+        ],
       },
       {
         'questionTitle': 'Who is your favourite actor',
-        'answers': ['RDJ', 'Caprio', 'C. Bale', 'T. Holland'],
+        'answers': [
+          {
+            'text': 'RDJ',
+            'score': 90,
+          },
+          {
+            'text': 'Caprio',
+            'score': 80,
+          },
+          {
+            'text': 'C. Bale',
+            'score': 70,
+          },
+          {
+            'text': 'Tom Holland',
+            'score': 70,
+          },
+        ],
       },
       {
         'questionTitle': 'Who is your favourite artist',
-        'answers': ['Lil. NasX', 'Akon', 'Skrillex', 'Sickick'],
+        'answers': [
+          {
+            'text': 'Lil. NasX',
+            'score': 70,
+          },
+          {
+            'text': 'Akon',
+            'score': 50,
+          },
+          {
+            'text': 'Skrillex',
+            'score': 80,
+          },
+          {
+            'text': 'Sickick',
+            'score': 70,
+          },
+        ],
       }
     ];
     return MaterialApp(
@@ -44,9 +104,9 @@ class _MyAppState extends State<MyApp> {
             ? Quiz(
                 questions: _questions,
                 questionIndex: _questionIndex,
-                answerQuestion: _onPressAnswerQuestionButton,
+                answerQuestion: _onAnswerQuestion,
               )
-            : Result(),
+            : Result(totalScore: _totalScore, resetQuiz: _resetQuiz),
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Answer extends StatelessWidget {
   final Function selectAnswer;
-  final String answerText;
+  final dynamic answerText;
 
   Answer(this.selectAnswer, this.answerText);
 
@@ -13,8 +13,8 @@ class Answer extends StatelessWidget {
       margin: EdgeInsets.all(8),
       child: ElevatedButton(
         style: ButtonStyle(),
-        child: Text(answerText),
-        onPressed: selectAnswer,
+        child: Text(answerText['text']),
+        onPressed: () => selectAnswer(answerText['score']),
       ),
     );
   }
